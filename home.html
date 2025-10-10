@@ -14,21 +14,43 @@
         }
 
         body {
-            background-color: #0a0a0a;
+            background-color: #0a0a1a;
             color: #e0e0e0;
             line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Reze-inspired color palette */
+        :root {
+            --reze-primary: #7a2c80;
+            --reze-secondary: #b300b3;
+            --reze-accent: #ff66cc;
+            --reze-dark: #0a0a1a;
+            --reze-light: #e6ccff;
+            --reze-medium: #4a235a;
+        }
+
+        /* Particle Canvas */
+        #particles-js {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
         }
 
         /* Header Styles */
         header {
-            background: linear-gradient(to right, #1a1a1a, #2a0a0a);
+            background: linear-gradient(to right, var(--reze-medium), var(--reze-primary));
             padding: 1rem 0;
             text-align: center;
-            border-bottom: 3px solid #b30000;
-            box-shadow: 0 4px 12px rgba(179, 0, 0, 0.3);
+            border-bottom: 3px solid var(--reze-accent);
+            box-shadow: 0 4px 12px rgba(255, 102, 204, 0.3);
             position: sticky;
             top: 0;
             z-index: 100;
+            backdrop-filter: blur(5px);
         }
 
         .header-content {
@@ -38,23 +60,25 @@
         }
 
         h1 {
-            color: #ff3333;
+            color: var(--reze-light);
             font-size: 2.5rem;
             margin-bottom: 0.5rem;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            letter-spacing: 1px;
         }
 
         .subtitle {
-            color: #cccccc;
+            color: var(--reze-accent);
             font-size: 1.2rem;
             font-weight: 300;
         }
 
         /* Navigation Styles */
         nav {
-            background-color: #1a1a1a;
+            background-color: var(--reze-medium);
             padding: 0.8rem 0;
-            border-bottom: 2px solid #b30000;
+            border-bottom: 2px solid var(--reze-accent);
+            backdrop-filter: blur(5px);
         }
 
         .nav-container {
@@ -66,18 +90,36 @@
         }
 
         .nav-link {
-            color: #e0e0e0;
+            color: var(--reze-light);
             text-decoration: none;
             padding: 0.5rem 1.5rem;
             margin: 0 0.5rem;
             border-radius: 4px;
             transition: all 0.3s ease;
             font-weight: 500;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-link::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .nav-link:hover::before {
+            left: 100%;
         }
 
         .nav-link:hover, .nav-link.active {
-            background-color: #b30000;
+            background-color: var(--reze-secondary);
             color: #ffffff;
+            box-shadow: 0 0 10px var(--reze-accent);
         }
 
         /* Main Content Styles */
@@ -86,6 +128,8 @@
             margin: 0 auto;
             padding: 2rem 20px;
             min-height: 70vh;
+            position: relative;
+            z-index: 1;
         }
 
         .page {
@@ -94,6 +138,12 @@
 
         .page.active {
             display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
 
         .profile-section {
@@ -115,16 +165,30 @@
             width: 100%;
             max-width: 300px;
             height: 350px;
-            background-color: #1a1a1a;
-            border: 3px solid #b30000;
+            background-color: var(--reze-medium);
+            border: 3px solid var(--reze-accent);
             border-radius: 8px;
             display: flex;
             justify-content: center;
             align-items: center;
-            color: #ff3333;
+            color: var(--reze-accent);
             font-size: 1.2rem;
-            box-shadow: 0 4px 15px rgba(179, 0, 0, 0.2);
+            box-shadow: 0 4px 15px rgba(255, 102, 204, 0.2);
             overflow: hidden;
+            position: relative;
+        }
+
+        .profile-photo::after {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            background: linear-gradient(45deg, var(--reze-primary), var(--reze-accent), var(--reze-secondary));
+            z-index: -1;
+            filter: blur(20px);
+            opacity: 0.3;
         }
 
         .profile-photo img {
@@ -139,19 +203,25 @@
         }
 
         .info-card {
-            background-color: #1a1a1a;
+            background-color: rgba(26, 26, 46, 0.8);
             border-radius: 8px;
             padding: 1.5rem;
             margin-bottom: 1.5rem;
-            border-left: 4px solid #b30000;
+            border-left: 4px solid var(--reze-accent);
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(5px);
+            transition: transform 0.3s ease;
+        }
+
+        .info-card:hover {
+            transform: translateY(-5px);
         }
 
         .info-card h2 {
-            color: #ff3333;
+            color: var(--reze-accent);
             margin-bottom: 1rem;
             font-size: 1.5rem;
-            border-bottom: 1px solid #333;
+            border-bottom: 1px solid var(--reze-medium);
             padding-bottom: 0.5rem;
         }
 
@@ -162,7 +232,7 @@
 
         .info-label {
             font-weight: bold;
-            color: #ff6666;
+            color: var(--reze-light);
             min-width: 120px;
         }
 
@@ -183,20 +253,40 @@
         }
 
         .skill-card {
-            background-color: #1a1a1a;
+            background-color: rgba(26, 26, 46, 0.8);
             border-radius: 8px;
             padding: 1.5rem;
             text-align: center;
-            border-top: 3px solid #b30000;
+            border-top: 3px solid var(--reze-accent);
             transition: transform 0.3s ease;
+            backdrop-filter: blur(5px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .skill-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent, rgba(255, 102, 204, 0.1), transparent);
+            transform: translateX(-100%);
+            transition: transform 0.6s;
+        }
+
+        .skill-card:hover::before {
+            transform: translateX(100%);
         }
 
         .skill-card:hover {
             transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(255, 102, 204, 0.2);
         }
 
         .skill-card h3 {
-            color: #ff3333;
+            color: var(--reze-accent);
             margin-bottom: 0.5rem;
         }
 
@@ -208,18 +298,24 @@
         }
 
         .materi-card {
-            background-color: #1a1a1a;
+            background-color: rgba(26, 26, 46, 0.8);
             border-radius: 8px;
             padding: 1.5rem;
-            border-left: 4px solid #b30000;
+            border-left: 4px solid var(--reze-accent);
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(5px);
+            transition: transform 0.3s ease;
+        }
+
+        .materi-card:hover {
+            transform: translateY(-5px);
         }
 
         .materi-card h2 {
-            color: #ff3333;
+            color: var(--reze-accent);
             margin-bottom: 1rem;
             font-size: 1.8rem;
-            border-bottom: 1px solid #333;
+            border-bottom: 1px solid var(--reze-medium);
             padding-bottom: 0.5rem;
         }
 
@@ -247,8 +343,8 @@
             width: 100%;
             max-width: 400px;
             border-radius: 8px;
-            border: 2px solid #b30000;
-            box-shadow: 0 4px 15px rgba(179, 0, 0, 0.2);
+            border: 2px solid var(--reze-accent);
+            box-shadow: 0 4px 15px rgba(255, 102, 204, 0.2);
         }
 
         .materi-list {
@@ -258,19 +354,36 @@
 
         .materi-list li {
             margin-bottom: 0.5rem;
+            position: relative;
+        }
+
+        .materi-list li::before {
+            content: '✦';
+            color: var(--reze-accent);
+            position: absolute;
+            left: -1.2rem;
+        }
+
+        code {
+            background-color: var(--reze-medium);
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            color: var(--reze-light);
+            font-family: monospace;
         }
 
         /* Footer Styles */
         footer {
-            background: linear-gradient(to right, #1a1a1a, #2a0a0a);
+            background: linear-gradient(to right, var(--reze-medium), var(--reze-primary));
             text-align: center;
             padding: 1.5rem 0;
             margin-top: 2rem;
-            border-top: 3px solid #b30000;
+            border-top: 3px solid var(--reze-accent);
+            backdrop-filter: blur(5px);
         }
 
         footer p {
-            color: #cccccc;
+            color: var(--reze-light);
         }
 
         /* Responsive Design */
@@ -301,10 +414,13 @@
     </style>
 </head>
 <body>
+    <!-- Particle Container -->
+    <div id="particles-js"></div>
+
     <header>
         <div class="header-content">
             <h1>ADMINISTRASI SISTEM JARINGAN XII TJK D</h1>
-            <p class="subtitle">Teknik Komputer dan Jaringan - SMK 3 Perguruan cikini</p>
+            <p class="subtitle">Teknik Komputer dan Jaringan - SMK 3 Perguruan Cikini</p>
         </div>
     </header>
 
@@ -330,19 +446,19 @@
                         <h2>Informasi Pribadi</h2>
                         <div class="info-item">
                             <span class="info-label">Nama Lengkap:</span>
-                            <span class="info-value"> Ray aji dipa dinangga</span>
+                            <span class="info-value">Ray Aji Dipa Dinangga</span>
                         </div>
                         <div class="info-item">
                             <span class="info-label">NIS:</span>
-                            <span class="info-value"> 12345678</span>
+                            <span class="info-value">12345678</span>
                         </div>
                         <div class="info-item">
                             <span class="info-label">Tempat Lahir:</span>
-                            <span class="info-value"> Jakarta</span>
+                            <span class="info-value">Jakarta</span>
                         </div>
                         <div class="info-item">
                             <span class="info-label">Tanggal Lahir:</span>
-                            <span class="info-value"> 10 Mei 2007</span>
+                            <span class="info-value">10 Mei 2007</span>
                         </div>
                         <div class="info-item">
                             <span class="info-label">Jenis Kelamin:</span>
@@ -354,7 +470,7 @@
                         <h2>Kontak & Alamat</h2>
                         <div class="info-item">
                             <span class="info-label">Alamat:</span>
-                            <span class="info-value"> Jl. K.H Ahmad Dahlan no 9c</span>
+                            <span class="info-value">Jl. K.H Ahmad Dahlan no 9c</span>
                         </div>
                         <div class="info-item">
                             <span class="info-label">Email:</span>
@@ -393,8 +509,8 @@
                             <p>Windows & Linux Server</p>
                         </div>
                         <div class="skill-card">
-                            <h3>fotografi</h3>
-                            <p>Nikon d3200, infinix hot 50 pro+</p>
+                            <h3>Fotografi</h3>
+                            <p>Nikon d3200, Infinix hot 50 pro+</p>
                         </div>
                         <div class="skill-card">
                             <h3>Pemrograman</h3>
@@ -414,25 +530,25 @@
                         <div class="materi-text">
                             <p>Pengantar hosting adalah layanan yang menyediakan space (tempat) dan resource (sumber daya) di server internet agar website atau aplikasi Anda bisa diakses online. Ini adalah fondasi dasarnya.</p>
                             
-                            <h3 style="color: #ff3333; margin-top: 1.5rem;">Fungsi Utama Pengantar Hosting:</h3>
+                            <h3 style="color: var(--reze-accent); margin-top: 1.5rem;">Fungsi Utama Pengantar Hosting:</h3>
                             <ul class="materi-list">
                                 <li>Menyimpan File atau Menyimpan semua file website (HTML, CSS, gambar, video, dll).</li>
-                                <li>Menjalankan Aplikasi atau  Menyediakan lingkungan untuk menjalankan skrip PHP, database MySQL, dll.</li>
+                                <li>Menjalankan Aplikasi atau Menyediakan lingkungan untuk menjalankan skrip PHP, database MySQL, dll.</li>
                                 <li>Menghubungkan ke Internet atau Memastikan server selalu terhubung ke internet dengan kecepatan tinggi.</li>
-                                <li>Penyedia Alamat Email atauMenyediakan layanan untuk membuat akun email dengan nama domain Anda (contoh: nama@perusahaananda.com).</li>
+                                <li>Penyedia Alamat Email atau Menyediakan layanan untuk membuat akun email dengan nama domain Anda (contoh: nama@perusahaananda.com).</li>
                             </ul>
                             
-                            <h3 style="color: #ff3333; margin-top: 1.5rem;">Jenis Control Panel Hosting Populer:</h3>
+                            <h3 style="color: var(--reze-accent); margin-top: 1.5rem;">Jenis Control Panel Hosting Populer:</h3>
                             <ul class="materi-list">
                                 <li><strong>Shared Hosting</strong> - Seperti kos-kosan. Satu server dipakai banyak website. Murah, cocok untuk pemula.</li>
-                                <li><strong>VPS(Virtual Private Server)</strong> - Seperti rumah dalam kompleks (townhouse). Anda punya bagian server yang dedicated, lebih bebas dan kuat.</li>
+                                <li><strong>VPS (Virtual Private Server)</strong> - Seperti rumah dalam kompleks (townhouse). Anda punya bagian server yang dedicated, lebih bebas dan kuat.</li>
                                 <li><strong>Cloud Hosting</strong> - Seperti menyewa ruang di pusat perbelanjaan yang fleksibel. Sumber dayanya bisa ditambah atau dikurangi sesuai kebutuhan.</li>
                                 <li><strong>Dedicated Server</strong> - Seperti membeli satu rumah lengkap. Satu server fisik hanya untuk Anda sendiri. Sangat kuat dan mahal.</li>
                             </ul>
                         </div>
                         <div class="materi-image">
-                            <div style="width: 100%; height: 300px; background-color: #2a2a2a; border: 2px solid #b30000; border-radius: 8px; display: flex; justify-content: center; align-items: center; color: #ff3333;">
-                                <img src="Screenshot 2025-10-10 140639.png" alt="panel control">
+                            <div style="width: 100%; height: 300px; background-color: var(--reze-medium); border: 2px solid var(--reze-accent); border-radius: 8px; display: flex; justify-content: center; align-items: center; color: var(--reze-accent); overflow: hidden;">
+                                <img src="Screenshot 2025-10-10 140639.png" alt="Panel Control">
                             </div>
                         </div>
                     </div>
@@ -444,7 +560,7 @@
                         <div class="materi-text">
                             <p>cPanel adalah control panel hosting web yang paling banyak digunakan di dunia. Ini menyediakan antarmuka grafis dan alat otomatisasi yang dirancang untuk menyederhanakan proses hosting website.</p>
                             
-                            <h3 style="color: #ff3333; margin-top: 1.5rem;">Fitur Utama cPanel:</h3>
+                            <h3 style="color: var(--reze-accent); margin-top: 1.5rem;">Fitur Utama cPanel:</h3>
                             <ul class="materi-list">
                                 <li><strong>File Manager</strong> - Mengelola file website tanpa FTP</li>
                                 <li><strong>Email Accounts</strong> - Membuat dan mengelola akun email</li>
@@ -455,13 +571,12 @@
                                 <li><strong>Backup</strong> - Membuat dan memulihkan backup</li>
                             </ul>
                             
-                            <h3 style="color: #ff3333; margin-top: 1.5rem;">Cara Mengakses cPanel:</h3>
+                            <h3 style="color: var(--reze-accent); margin-top: 1.5rem;">Cara Mengakses cPanel:</h3>
                             <p>Biasanya diakses melalui: <code>http://yourdomain.com/cpanel</code> atau <code>http://server-ip:2082</code></p>
                         </div>
                         <div class="materi-image">
-                            <!-- Example cPanel image -->
-                            <div style="width: 100%; height: 300px; background-color: #2a2a2a; border: 2px solid #b30000; border-radius: 8px; display: flex; justify-content: center; align-items: center; color: #ff3333;">
-                                <img src="image-19.png" alt="cpanel">
+                            <div style="width: 100%; height: 300px; background-color: var(--reze-medium); border: 2px solid var(--reze-accent); border-radius: 8px; display: flex; justify-content: center; align-items: center; color: var(--reze-accent); overflow: hidden;">
+                                <img src="image-19.png" alt="cPanel">
                             </div>
                         </div>
                     </div>
@@ -474,9 +589,102 @@
         <p>&copy; 2025 Administrasi Sistem Jaringan XII TJK D - SMK 3 Perguruan Cikini. All Rights Reserved.</p>
     </footer>
 
+    <!-- Include Particles.js -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    
     <script>
-        // Navigation functionality
+        // Initialize particles
         document.addEventListener('DOMContentLoaded', function() {
+            particlesJS('particles-js', {
+                particles: {
+                    number: {
+                        value: 80,
+                        density: {
+                            enable: true,
+                            value_area: 800
+                        }
+                    },
+                    color: {
+                        value: ["#7a2c80", "#b300b3", "#ff66cc", "#e6ccff"]
+                    },
+                    shape: {
+                        type: "circle",
+                        stroke: {
+                            width: 0,
+                            color: "#000000"
+                        }
+                    },
+                    opacity: {
+                        value: 0.5,
+                        random: true,
+                        anim: {
+                            enable: true,
+                            speed: 1,
+                            opacity_min: 0.1,
+                            sync: false
+                        }
+                    },
+                    size: {
+                        value: 3,
+                        random: true,
+                        anim: {
+                            enable: true,
+                            speed: 2,
+                            size_min: 0.1,
+                            sync: false
+                        }
+                    },
+                    line_linked: {
+                        enable: true,
+                        distance: 150,
+                        color: "#7a2c80",
+                        opacity: 0.4,
+                        width: 1
+                    },
+                    move: {
+                        enable: true,
+                        speed: 2,
+                        direction: "none",
+                        random: true,
+                        straight: false,
+                        out_mode: "out",
+                        bounce: false,
+                        attract: {
+                            enable: false,
+                            rotateX: 600,
+                            rotateY: 1200
+                        }
+                    }
+                },
+                interactivity: {
+                    detect_on: "canvas",
+                    events: {
+                        onhover: {
+                            enable: true,
+                            mode: "grab"
+                        },
+                        onclick: {
+                            enable: true,
+                            mode: "push"
+                        },
+                        resize: true
+                    },
+                    modes: {
+                        grab: {
+                            distance: 140,
+                            line_linked: {
+                                opacity: 1
+                            }
+                        },
+                        push: {
+                            particles_nb: 4
+                        }
+                    }
+                },
+                retina_detect: true
+            });
+            
+            // Navigation functionality
             const navLinks = document.querySelectorAll('.nav-link');
             const pages = document.querySelectorAll('.page');
             
