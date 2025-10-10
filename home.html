@@ -1,9 +1,292 @@
-<!doctype html>
-<html>
-  <head>
-    
-  </head>
-  <body>
-    
-  </body>
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administrasi Sistem Jaringan XII TJK D</title>
+    <style>
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #0a0a0a;
+            color: #e0e0e0;
+            line-height: 1.6;
+        }
+
+        /* Header Styles */
+        header {
+            background: linear-gradient(to right, #1a1a1a, #2a0a0a);
+            padding: 2rem 0;
+            text-align: center;
+            border-bottom: 3px solid #b30000;
+            box-shadow: 0 4px 12px rgba(179, 0, 0, 0.3);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        h1 {
+            color: #ff3333;
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .subtitle {
+            color: #cccccc;
+            font-size: 1.2rem;
+            font-weight: 300;
+        }
+
+        /* Main Content Styles */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 20px;
+        }
+
+        .profile-section {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .photo-container {
+            flex: 1;
+            min-width: 300px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+        }
+
+        .profile-photo {
+            width: 100%;
+            max-width: 300px;
+            height: 350px;
+            background-color: #1a1a1a;
+            border: 3px solid #b30000;
+            border-radius: 8px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #ff3333;
+            font-size: 1.2rem;
+            box-shadow: 0 4px 15px rgba(179, 0, 0, 0.2);
+            overflow: hidden;
+        }
+
+        .profile-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .info-container {
+            flex: 2;
+            min-width: 300px;
+        }
+
+        .info-card {
+            background-color: #1a1a1a;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border-left: 4px solid #b30000;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .info-card h2 {
+            color: #ff3333;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+            border-bottom: 1px solid #333;
+            padding-bottom: 0.5rem;
+        }
+
+        .info-item {
+            margin-bottom: 0.8rem;
+            display: flex;
+        }
+
+        .info-label {
+            font-weight: bold;
+            color: #ff6666;
+            min-width: 120px;
+        }
+
+        .info-value {
+            color: #e0e0e0;
+        }
+
+        /* Skills Section */
+        .skills-section {
+            margin-top: 2rem;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .skill-card {
+            background-color: #1a1a1a;
+            border-radius: 8px;
+            padding: 1.5rem;
+            text-align: center;
+            border-top: 3px solid #b30000;
+            transition: transform 0.3s ease;
+        }
+
+        .skill-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .skill-card h3 {
+            color: #ff3333;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Footer Styles */
+        footer {
+            background: linear-gradient(to right, #1a1a1a, #2a0a0a);
+            text-align: center;
+            padding: 1.5rem 0;
+            margin-top: 2rem;
+            border-top: 3px solid #b30000;
+        }
+
+        footer p {
+            color: #cccccc;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .profile-section {
+                flex-direction: column;
+            }
+            
+            .photo-container, .info-container {
+                width: 100%;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <h1>ADMINISTRASI SISTEM JARINGAN XII TJK D</h1>
+            <p class="subtitle">Profil Siswa - Teknik Komputer dan Jaringan</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="profile-section">
+            <div class="photo-container">
+                <div class="profile-photo">
+                    <!-- Replace with actual image -->
+                    <!-- <img src="profile-photo.jpg" alt="Foto Profil"> -->
+                    <span>Foto Profil</span>
+                </div>
+            </div>
+            
+            <div class="info-container">
+                <div class="info-card">
+                    <h2>Informasi Pribadi</h2>
+                    <div class="info-item">
+                        <span class="info-label">Nama Lengkap:</span>
+                        <span class="info-value">Nama Siswa</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">NIS:</span>
+                        <span class="info-value">12345678</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Tempat Lahir:</span>
+                        <span class="info-value">Kota Anda</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Tanggal Lahir:</span>
+                        <span class="info-value">DD/MM/YYYY</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Jenis Kelamin:</span>
+                        <span class="info-value">Laki-laki/Perempuan</span>
+                    </div>
+                </div>
+                
+                <div class="info-card">
+                    <h2>Kontak & Alamat</h2>
+                    <div class="info-item">
+                        <span class="info-label">Alamat:</span>
+                        <span class="info-value">Jl. Contoh Alamat No. 123, Kota Anda</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Email:</span>
+                        <span class="info-value">email@contoh.com</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Telepon:</span>
+                        <span class="info-value">0812-3456-7890</span>
+                    </div>
+                </div>
+                
+                <div class="info-card">
+                    <h2>Hobi & Minat</h2>
+                    <div class="info-item">
+                        <span class="info-label">Hobi:</span>
+                        <span class="info-value">Pemrograman, Jaringan Komputer, Desain Grafis</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Minat:</span>
+                        <span class="info-value">Administrasi Jaringan, Keamanan Siber, Cloud Computing</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="skills-section">
+            <div class="info-card">
+                <h2>Keahlian Teknis</h2>
+                <div class="skills-grid">
+                    <div class="skill-card">
+                        <h3>Konfigurasi Jaringan</h3>
+                        <p>Router, Switch, VLAN</p>
+                    </div>
+                    <div class="skill-card">
+                        <h3>Administrasi Server</h3>
+                        <p>Windows & Linux Server</p>
+                    </div>
+                    <div class="skill-card">
+                        <h3>Keamanan Jaringan</h3>
+                        <p>Firewall, IDS/IPS</p>
+                    </div>
+                    <div class="skill-card">
+                        <h3>Pemrograman</h3>
+                        <p>HTML, CSS, JavaScript</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2023 Administrasi Sistem Jaringan XII TJK D - All Rights Reserved</p>
+    </footer>
+</body>
 </html>
