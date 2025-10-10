@@ -22,10 +22,13 @@
         /* Header Styles */
         header {
             background: linear-gradient(to right, #1a1a1a, #2a0a0a);
-            padding: 2rem 0;
+            padding: 1rem 0;
             text-align: center;
             border-bottom: 3px solid #b30000;
             box-shadow: 0 4px 12px rgba(179, 0, 0, 0.3);
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
 
         .header-content {
@@ -47,11 +50,50 @@
             font-weight: 300;
         }
 
+        /* Navigation Styles */
+        nav {
+            background-color: #1a1a1a;
+            padding: 0.8rem 0;
+            border-bottom: 2px solid #b30000;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .nav-link {
+            color: #e0e0e0;
+            text-decoration: none;
+            padding: 0.5rem 1.5rem;
+            margin: 0 0.5rem;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            background-color: #b30000;
+            color: #ffffff;
+        }
+
         /* Main Content Styles */
         .container {
             max-width: 1200px;
             margin: 0 auto;
             padding: 2rem 20px;
+            min-height: 70vh;
+        }
+
+        .page {
+            display: none;
+        }
+
+        .page.active {
+            display: block;
         }
 
         .profile-section {
@@ -158,6 +200,66 @@
             margin-bottom: 0.5rem;
         }
 
+        /* Materi ASJ Page Styles */
+        .materi-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+        }
+
+        .materi-card {
+            background-color: #1a1a1a;
+            border-radius: 8px;
+            padding: 1.5rem;
+            border-left: 4px solid #b30000;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .materi-card h2 {
+            color: #ff3333;
+            margin-bottom: 1rem;
+            font-size: 1.8rem;
+            border-bottom: 1px solid #333;
+            padding-bottom: 0.5rem;
+        }
+
+        .materi-content {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .materi-text {
+            flex: 2;
+            min-width: 300px;
+        }
+
+        .materi-image {
+            flex: 1;
+            min-width: 300px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+        }
+
+        .materi-image img {
+            width: 100%;
+            max-width: 400px;
+            border-radius: 8px;
+            border: 2px solid #b30000;
+            box-shadow: 0 4px 15px rgba(179, 0, 0, 0.2);
+        }
+
+        .materi-list {
+            margin-left: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .materi-list li {
+            margin-bottom: 0.5rem;
+        }
+
         /* Footer Styles */
         footer {
             background: linear-gradient(to right, #1a1a1a, #2a0a0a);
@@ -173,16 +275,27 @@
 
         /* Responsive Design */
         @media (max-width: 768px) {
-            .profile-section {
+            .profile-section, .materi-content {
                 flex-direction: column;
             }
             
-            .photo-container, .info-container {
+            .photo-container, .info-container, .materi-text, .materi-image {
                 width: 100%;
             }
             
             h1 {
                 font-size: 2rem;
+            }
+            
+            .nav-container {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .nav-link {
+                margin: 0.2rem 0;
+                width: 100%;
+                text-align: center;
             }
         }
     </style>
@@ -191,92 +304,170 @@
     <header>
         <div class="header-content">
             <h1>ADMINISTRASI SISTEM JARINGAN XII TJK D</h1>
-            <p class="subtitle">Profil Siswa - Teknik Komputer dan Jaringan</p>
+            <p class="subtitle">Teknik Komputer dan Jaringan - SMK Negeri 1 Contoh</p>
         </div>
     </header>
 
+    <nav>
+        <div class="nav-container">
+            <a href="#" class="nav-link active" data-page="profile">Profil Siswa</a>
+            <a href="#" class="nav-link" data-page="materi">Materi ASJ</a>
+        </div>
+    </nav>
+
     <main class="container">
-        <section class="profile-section">
-            <div class="photo-container">
-                <div class="profile-photo">
-                    <img src="IMG_4272.JPG" alt="Foto Profil">
+        <!-- Profile Page -->
+        <section id="profile" class="page active">
+            <div class="profile-section">
+                <div class="photo-container">
+                    <div class="profile-photo">
+                        <img src="IMG_4272.JPG" alt="Foto Profil">
+                    </div>
+                </div>
+                
+                <div class="info-container">
+                    <div class="info-card">
+                        <h2>Informasi Pribadi</h2>
+                        <div class="info-item">
+                            <span class="info-label">Nama Lengkap:</span>
+                            <span class="info-value">Ahmad Rizki Pratama</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">NIS:</span>
+                            <span class="info-value">12345678</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Tempat Lahir:</span>
+                            <span class="info-value">Jakarta</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Tanggal Lahir:</span>
+                            <span class="info-value">15 Agustus 2006</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Jenis Kelamin:</span>
+                            <span class="info-value">Laki-laki</span>
+                        </div>
+                    </div>
+                    
+                    <div class="info-card">
+                        <h2>Kontak & Alamat</h2>
+                        <div class="info-item">
+                            <span class="info-label">Alamat:</span>
+                            <span class="info-value">Jl. Merdeka No. 123, Jakarta Selatan</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Email:</span>
+                            <span class="info-value">ahmad.rizki@example.sch.id</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Telepon:</span>
+                            <span class="info-value">0812-3456-7890</span>
+                        </div>
+                    </div>
+                    
+                    <div class="info-card">
+                        <h2>Hobi & Minat</h2>
+                        <div class="info-item">
+                            <span class="info-label">Hobi:</span>
+                            <span class="info-value">Pemrograman, Jaringan Komputer, Desain Grafis, Gaming</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Minat:</span>
+                            <span class="info-value">Administrasi Jaringan, Keamanan Siber, Cloud Computing</span>
+                        </div>
+                    </div>
                 </div>
             </div>
             
-            <div class="info-container">
+            <section class="skills-section">
                 <div class="info-card">
-                    <h2>Informasi Pribadi</h2>
-                    <div class="info-item">
-                        <span class="info-label">Nama Lengkap:</span>
-                        <span class="info-value">Nama Siswa</span>
-                    </div>
-                    <div class="info-item">
-                        <span class="info-label">NIS:</span>
-                        <span class="info-value">12345678</span>
-                    </div>
-                    <div class="info-item">
-                        <span class="info-label">Tempat Lahir:</span>
-                        <span class="info-value">Kota Anda</span>
-                    </div>
-                    <div class="info-item">
-                        <span class="info-label">Tanggal Lahir:</span>
-                        <span class="info-value">DD/MM/YYYY</span>
-                    </div>
-                    <div class="info-item">
-                        <span class="info-label">Jenis Kelamin:</span>
-                        <span class="info-value">Laki-laki/Perempuan</span>
+                    <h2>Keahlian Teknis</h2>
+                    <div class="skills-grid">
+                        <div class="skill-card">
+                            <h3>Konfigurasi Jaringan</h3>
+                            <p>Router, Switch, VLAN, Wireless</p>
+                        </div>
+                        <div class="skill-card">
+                            <h3>Administrasi Server</h3>
+                            <p>Windows & Linux Server</p>
+                        </div>
+                        <div class="skill-card">
+                            <h3>Keamanan Jaringan</h3>
+                            <p>Firewall, IDS/IPS, VPN</p>
+                        </div>
+                        <div class="skill-card">
+                            <h3>Pemrograman</h3>
+                            <p>HTML, CSS, JavaScript, PHP</p>
+                        </div>
                     </div>
                 </div>
-                
-                <div class="info-card">
-                    <h2>Kontak & Alamat</h2>
-                    <div class="info-item">
-                        <span class="info-label">Alamat:</span>
-                        <span class="info-value">Jl. Contoh Alamat No. 123, Kota Anda</span>
-                    </div>
-                    <div class="info-item">
-                        <span class="info-label">Email:</span>
-                        <span class="info-value">email@contoh.com</span>
-                    </div>
-                    <div class="info-item">
-                        <span class="info-label">Telepon:</span>
-                        <span class="info-value">0812-3456-7890</span>
-                    </div>
-                </div>
-                
-                <div class="info-card">
-                    <h2>Hobi & Minat</h2>
-                    <div class="info-item">
-                        <span class="info-label">Hobi:</span>
-                        <span class="info-value">Pemrograman, Jaringan Komputer, Desain Grafis</span>
-                    </div>
-                    <div class="info-item">
-                        <span class="info-label">Minat:</span>
-                        <span class="info-value">Administrasi Jaringan, Keamanan Siber, Cloud Computing</span>
-                    </div>
-                </div>
-            </div>
+            </section>
         </section>
-        
-        <section class="skills-section">
-            <div class="info-card">
-                <h2>Keahlian Teknis</h2>
-                <div class="skills-grid">
-                    <div class="skill-card">
-                        <h3>Konfigurasi Jaringan</h3>
-                        <p>Router, Switch, VLAN</p>
+
+        <!-- Materi ASJ Page -->
+        <section id="materi" class="page">
+            <div class="materi-container">
+                <div class="materi-card">
+                    <h2>Control Panel Hosting</h2>
+                    <div class="materi-content">
+                        <div class="materi-text">
+                            <p>Control Panel Hosting adalah antarmuka web yang memungkinkan pengguna untuk mengelola berbagai aspek akun hosting mereka. Control panel ini menyediakan alat yang mudah digunakan untuk mengelola domain, email, database, file, dan banyak lagi.</p>
+                            
+                            <h3 style="color: #ff3333; margin-top: 1.5rem;">Fungsi Utama Control Panel Hosting:</h3>
+                            <ul class="materi-list">
+                                <li>Manajemen domain dan subdomain</li>
+                                <li>Pengelolaan akun email</li>
+                                <li>Manajemen database (MySQL, PostgreSQL)</li>
+                                <li>Upload dan manajemen file melalui File Manager</li>
+                                <li>Instalasi aplikasi dengan satu klik (WordPress, Joomla, dll)</li>
+                                <li>Monitoring penggunaan resource (disk space, bandwidth)</li>
+                                <li>Konfigurasi keamanan dan backup</li>
+                            </ul>
+                            
+                            <h3 style="color: #ff3333; margin-top: 1.5rem;">Jenis Control Panel Hosting Populer:</h3>
+                            <ul class="materi-list">
+                                <li><strong>cPanel</strong> - Control panel paling populer untuk hosting Linux</li>
+                                <li><strong>Plesk</strong> - Alternatif cPanel yang mendukung Windows dan Linux</li>
+                                <li><strong>DirectAdmin</strong> - Lightweight alternative dengan harga lebih terjangkau</li>
+                                <li><strong>Webmin/Virtualmin</strong> - Solusi open source untuk administrasi server</li>
+                            </ul>
+                        </div>
+                        <div class="materi-image">
+                            <!-- Example control panel image -->
+                            <div style="width: 100%; height: 300px; background-color: #2a2a2a; border: 2px solid #b30000; border-radius: 8px; display: flex; justify-content: center; align-items: center; color: #ff3333;">
+                                [Gambar Contoh Control Panel Hosting]
+                            </div>
+                        </div>
                     </div>
-                    <div class="skill-card">
-                        <h3>Administrasi Server</h3>
-                        <p>Windows & Linux Server</p>
-                    </div>
-                    <div class="skill-card">
-                        <h3>Keamanan Jaringan</h3>
-                        <p>Firewall, IDS/IPS</p>
-                    </div>
-                    <div class="skill-card">
-                        <h3>Pemrograman</h3>
-                        <p>HTML, CSS, JavaScript</p>
+                </div>
+                
+                <div class="materi-card">
+                    <h2>cPanel - Control Panel Terpopuler</h2>
+                    <div class="materi-content">
+                        <div class="materi-text">
+                            <p>cPanel adalah control panel hosting web yang paling banyak digunakan di dunia. Ini menyediakan antarmuka grafis dan alat otomatisasi yang dirancang untuk menyederhanakan proses hosting website.</p>
+                            
+                            <h3 style="color: #ff3333; margin-top: 1.5rem;">Fitur Utama cPanel:</h3>
+                            <ul class="materi-list">
+                                <li><strong>File Manager</strong> - Mengelola file website tanpa FTP</li>
+                                <li><strong>Email Accounts</strong> - Membuat dan mengelola akun email</li>
+                                <li><strong>MySQL Databases</strong> - Membuat dan mengelola database</li>
+                                <li><strong>Domain Management</strong> - Menambahkan domain, subdomain, dan parkir domain</li>
+                                <li><strong>Softaculous Apps Installer</strong> - Instalasi aplikasi web dengan satu klik</li>
+                                <li><strong>Security</strong> - Konfigurasi SSL, IP Blocker, dan Hotlink Protection</li>
+                                <li><strong>Backup</strong> - Membuat dan memulihkan backup</li>
+                            </ul>
+                            
+                            <h3 style="color: #ff3333; margin-top: 1.5rem;">Cara Mengakses cPanel:</h3>
+                            <p>Biasanya diakses melalui: <code>http://yourdomain.com/cpanel</code> atau <code>http://server-ip:2082</code></p>
+                        </div>
+                        <div class="materi-image">
+                            <!-- Example cPanel image -->
+                            <div style="width: 100%; height: 300px; background-color: #2a2a2a; border: 2px solid #b30000; border-radius: 8px; display: flex; justify-content: center; align-items: center; color: #ff3333;">
+                                [Gambar Contoh Tampilan cPanel]
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -284,7 +475,30 @@
     </main>
 
     <footer>
-        <p>&copy; 2023 Administrasi Sistem Jaringan XII TJK D - All Rights Reserved</p>
+        <p>&copy; 2023 Administrasi Sistem Jaringan XII TJK D - SMK Negeri 1 Contoh. All Rights Reserved.</p>
     </footer>
+
+    <script>
+        // Navigation functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const navLinks = document.querySelectorAll('.nav-link');
+            const pages = document.querySelectorAll('.page');
+            
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    // Remove active class from all links and pages
+                    navLinks.forEach(l => l.classList.remove('active'));
+                    pages.forEach(p => p.classList.remove('active'));
+                    
+                    // Add active class to clicked link and corresponding page
+                    this.classList.add('active');
+                    const pageId = this.getAttribute('data-page');
+                    document.getElementById(pageId).classList.add('active');
+                });
+            });
+        });
+    </script>
 </body>
 </html>
