@@ -122,6 +122,7 @@
         .nav-links {
             display: flex;
             list-style: none;
+            align-items: center;
         }
 
         .nav-links li {
@@ -155,6 +156,27 @@
         .nav-links a:hover,
         .nav-links a.active {
             color: var(--primary);
+        }
+
+        .language-toggle {
+            background: transparent;
+            border: 1px solid var(--primary);
+            color: var(--light);
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            font-weight: 500;
+        }
+
+        .language-toggle:hover {
+            background: var(--primary);
+        }
+
+        .language-toggle i {
+            margin-right: 5px;
         }
 
         .menu-toggle {
@@ -383,11 +405,6 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: transform 0.5s ease;
-        }
-
-        .materi-card:hover .materi-image img {
-            transform: scale(1.05);
         }
 
         .materi-text {
@@ -572,6 +589,12 @@
                     <li><a href="#about" class="nav-link">About</a></li>
                     <li><a href="#skills" class="nav-link">Skills</a></li>
                     <li><a href="#materi" class="nav-link">Materi</a></li>
+                    <li>
+                        <button id="language-toggle" class="language-toggle">
+                            <i class="fas fa-language"></i>
+                            <span>ID</span>
+                        </button>
+                    </li>
                 </ul>
             </nav>
         </div>
@@ -691,7 +714,7 @@
             <div class="materi-content">
                 <div class="materi-card">
                     <div class="materi-image">
-                        <img src="https://images.unsplash.com/photo-1611224923853-80b023f02d71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Web Hosting">
+                        <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1174&q=80" alt="Hosting Illustration">
                     </div>
                     <div class="materi-text">
                         <h3>Introduction to Hosting</h3>
@@ -714,7 +737,7 @@
                 </div>
                 <div class="materi-card">
                     <div class="materi-image">
-                        <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="cPanel Interface">
+                        <img src="https://images.unsplash.com/photo-1614064641938-3bbee52942c7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="cPanel Illustration">
                     </div>
                     <div class="materi-text">
                         <h3>cPanel - Control Panel</h3>
@@ -734,35 +757,25 @@
                 </div>
                 <div class="materi-card">
                     <div class="materi-image">
-                        <img src="https://images.unsplash.com/photo-1544197150-b99a580bb7a8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Network Security">
+                        <img src="https://images.unsplash.com/photo-1544197150-b99a580bb7a8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="Domain Illustration">
                     </div>
                     <div class="materi-text">
-                        <h3>Network Security</h3>
-                        <p>Network security consists of policies and practices adopted to prevent and monitor unauthorized access, misuse, modification, or denial of a computer network.</p>
-                        <h4>Key Security Measures:</h4>
+                        <h3>Domain Management</h3>
+                        <p>Domain names are human-readable addresses that point to websites on the internet. Understanding domain management is crucial for web administration.</p>
+                        <h4>Key Concepts:</h4>
                         <ul class="materi-list">
-                            <li>Firewall Configuration</li>
-                            <li>Intrusion Detection Systems</li>
-                            <li>VPN Setup</li>
-                            <li>Access Control Lists</li>
-                            <li>Encryption Protocols</li>
+                            <li>Domain Registration</li>
+                            <li>DNS Management</li>
+                            <li>Name Servers</li>
+                            <li>Domain Renewal</li>
+                            <li>Subdomains</li>
                         </ul>
-                    </div>
-                </div>
-                <div class="materi-card">
-                    <div class="materi-image">
-                        <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Server Administration">
-                    </div>
-                    <div class="materi-text">
-                        <h3>Server Administration</h3>
-                        <p>Server administration involves the management and maintenance of server hardware and software to ensure optimal performance and security.</p>
-                        <h4>Administration Tasks:</h4>
+                        <h4>Popular Domain Extensions:</h4>
                         <ul class="materi-list">
-                            <li>User Account Management</li>
-                            <li>Software Installation & Updates</li>
-                            <li>Performance Monitoring</li>
-                            <li>Backup and Recovery</li>
-                            <li>Security Hardening</li>
+                            <li>.com - Commercial</li>
+                            <li>.net - Network</li>
+                            <li>.org - Organization</li>
+                            <li>.id - Indonesia</li>
                         </ul>
                     </div>
                 </div>
@@ -850,6 +863,198 @@
                 }
             });
         });
+
+        // Language Toggle
+        const languageToggle = document.getElementById('language-toggle');
+        const languageText = languageToggle.querySelector('span');
+        let isIndonesian = false;
+
+        // Indonesian translations
+        const translations = {
+            // Navigation
+            "Home": "Beranda",
+            "About": "Tentang",
+            "Skills": "Keahlian",
+            "Materi": "Materi",
+            
+            // Hero Section
+            "Hi, I'm <span>Ray Aji Dipa Dinangga</span>": "Halo, Saya <span>Ray Aji Dipa Dinangga</span>",
+            "Student at SMK 3 Perguruan Cikini, specializing in Computer and Network Engineering. Passionate about network administration, cybersecurity, and programming.": "Siswa di SMK 3 Perguruan Cikini, jurusan Teknik Komputer dan Jaringan. Tertarik pada administrasi jaringan, keamanan siber, dan pemrograman.",
+            "Learn More About Me": "Pelajari Lebih Lanjut",
+            
+            // About Section
+            "About Me": "Tentang Saya",
+            "Personal Information": "Informasi Pribadi",
+            "I am a student at SMK 3 Perguruan Cikini, majoring in Computer and Network Engineering. I have a strong interest in network administration, cybersecurity, and programming.": "Saya adalah siswa di SMK 3 Perguruan Cikini, jurusan Teknik Komputer dan Jaringan. Saya memiliki minat yang kuat dalam administrasi jaringan, keamanan siber, dan pemrograman.",
+            "Born: May 10, 2007": "Lahir: 10 Mei 2007",
+            
+            // Skills Section
+            "Technical Skills": "Keahlian Teknis",
+            "Network Configuration": "Konfigurasi Jaringan",
+            "Router Configuration": "Konfigurasi Router",
+            "Cable Management": "Manajemen Kabel",
+            "VLAN Setup": "Setup VLAN",
+            "Wireless Networks": "Jaringan Nirkabel",
+            "Device Technician": "Teknisi Perangkat",
+            "Re-Install OS": "Instal Ulang OS",
+            "Cleaning Device": "Pembersihan Perangkat",
+            "Upgrade Performance": "Peningkatan Performa",
+            "Free Consultation": "Konsultasi Gratis",
+            "Photography": "Fotografi",
+            "Photo Editing": "Edit Foto",
+            "Composition": "Komposisi",
+            "Programming": "Pemrograman",
+            "Web Development": "Pengembangan Web",
+            "Problem Solving": "Pemecahan Masalah",
+            
+            // Materi Section
+            "ASJ Materials": "Materi ASJ",
+            "Introduction to Hosting": "Pengenalan Hosting",
+            "Hosting is a service that provides space and resources on internet servers so that your website or application can be accessed online.": "Hosting adalah layanan yang menyediakan ruang dan sumber daya di server internet agar situs web atau aplikasi Anda dapat diakses online.",
+            "Main Functions:": "Fungsi Utama:",
+            "Storing website files": "Menyimpan file situs web",
+            "Running applications": "Menjalankan aplikasi",
+            "Connecting to the internet": "Menghubungkan ke internet",
+            "Providing email services": "Menyediakan layanan email",
+            "Popular Hosting Types:": "Jenis Hosting Populer:",
+            "Shared Hosting": "Shared Hosting",
+            "VPS (Virtual Private Server)": "VPS (Virtual Private Server)",
+            "Cloud Hosting": "Cloud Hosting",
+            "Dedicated Server": "Dedicated Server",
+            "cPanel - Control Panel": "cPanel - Panel Kontrol",
+            "cPanel is the most widely used web hosting control panel in the world, providing a graphical interface and automation tools.": "cPanel adalah panel kontrol hosting web yang paling banyak digunakan di dunia, menyediakan antarmuka grafis dan alat otomatisasi.",
+            "Main Features:": "Fitur Utama:",
+            "File Manager": "Manajer File",
+            "Email Accounts": "Akun Email",
+            "MySQL Databases": "Basis Data MySQL",
+            "Domain Management": "Manajemen Domain",
+            "Softaculous Apps Installer": "Penginstal Aplikasi Softaculous",
+            "Security Configuration": "Konfigurasi Keamanan",
+            "Backup Management": "Manajemen Cadangan",
+            "Access via:": "Akses melalui:",
+            "Domain Management": "Manajemen Domain",
+            "Domain names are human-readable addresses that point to websites on the internet. Understanding domain management is crucial for web administration.": "Nama domain adalah alamat yang dapat dibaca manusia yang menunjuk ke situs web di internet. Memahami manajemen domain sangat penting untuk administrasi web.",
+            "Key Concepts:": "Konsep Utama:",
+            "Domain Registration": "Pendaftaran Domain",
+            "DNS Management": "Manajemen DNS",
+            "Name Servers": "Server Nama",
+            "Domain Renewal": "Perpanjangan Domain",
+            "Subdomains": "Subdomain",
+            "Popular Domain Extensions:": "Ekstensi Domain Populer:",
+            ".com - Commercial": ".com - Komersial",
+            ".net - Network": ".net - Jaringan",
+            ".org - Organization": ".org - Organisasi",
+            ".id - Indonesia": ".id - Indonesia"
+        };
+
+        languageToggle.addEventListener('click', () => {
+            isIndonesian = !isIndonesian;
+            
+            if (isIndonesian) {
+                languageText.textContent = 'EN';
+                translateToIndonesian();
+            } else {
+                languageText.textContent = 'ID';
+                translateToEnglish();
+            }
+        });
+
+        function translateToIndonesian() {
+            // Translate navigation
+            document.querySelectorAll('.nav-link').forEach(link => {
+                const text = link.textContent;
+                if (translations[text]) {
+                    link.textContent = translations[text];
+                }
+            });
+            
+            // Translate hero section
+            const heroTitle = document.querySelector('.hero-text h1');
+            heroTitle.innerHTML = translations[heroTitle.innerHTML.trim()];
+            
+            const heroParagraph = document.querySelector('.hero-text p');
+            heroParagraph.textContent = translations[heroParagraph.textContent];
+            
+            const heroButton = document.querySelector('.hero-text .btn');
+            heroButton.textContent = translations[heroButton.textContent];
+            
+            // Translate about section
+            const aboutTitle = document.querySelector('.section-title');
+            aboutTitle.textContent = translations[aboutTitle.textContent];
+            
+            const aboutSubtitle = document.querySelector('.about-text h2');
+            aboutSubtitle.textContent = translations[aboutSubtitle.textContent];
+            
+            const aboutParagraph = document.querySelector('.about-text p');
+            aboutParagraph.textContent = translations[aboutParagraph.textContent];
+            
+            // Translate about info items
+            document.querySelectorAll('.info-item span').forEach(item => {
+                if (translations[item.textContent]) {
+                    item.textContent = translations[item.textContent];
+                }
+            });
+            
+            // Translate skills section
+            const skillsTitle = document.querySelector('#skills .section-title');
+            skillsTitle.textContent = translations[skillsTitle.textContent];
+            
+            document.querySelectorAll('.skill-category h3').forEach(title => {
+                const originalText = title.textContent.replace(/▹/g, '').trim();
+                if (translations[originalText]) {
+                    title.textContent = translations[originalText];
+                }
+            });
+            
+            document.querySelectorAll('.skill-list li').forEach(item => {
+                if (translations[item.textContent]) {
+                    item.textContent = translations[item.textContent];
+                }
+            });
+            
+            // Translate materi section
+            const materiTitle = document.querySelector('#materi .section-title');
+            materiTitle.textContent = translations[materiTitle.textContent];
+            
+            document.querySelectorAll('.materi-text h3').forEach(title => {
+                if (translations[title.textContent]) {
+                    title.textContent = translations[title.textContent];
+                }
+            });
+            
+            document.querySelectorAll('.materi-text p').forEach(paragraph => {
+                if (translations[paragraph.textContent]) {
+                    paragraph.textContent = translations[paragraph.textContent];
+                }
+            });
+            
+            document.querySelectorAll('.materi-text h4').forEach(subtitle => {
+                if (translations[subtitle.textContent]) {
+                    subtitle.textContent = translations[subtitle.textContent];
+                }
+            });
+            
+            document.querySelectorAll('.materi-list li').forEach(item => {
+                if (translations[item.textContent]) {
+                    item.textContent = translations[item.textContent];
+                }
+            });
+            
+            // Update code element
+            const codeElement = document.querySelector('code');
+            if (codeElement && translations["Access via:"]) {
+                const parent = codeElement.parentElement;
+                if (parent.textContent.includes("Access via:")) {
+                    parent.innerHTML = parent.innerHTML.replace("Access via:", translations["Access via:"]);
+                }
+            }
+        }
+
+        function translateToEnglish() {
+            // This would reverse the translation process
+            // For simplicity, we'll just reload the page
+            location.reload();
+        }
     </script>
 </body>
 </html>
