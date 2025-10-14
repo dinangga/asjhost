@@ -3,496 +3,463 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Administrasi Sistem Jaringan XII TJK D</title>
+    <title>Notebook Theme Website</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Caveat:wght@700&display=swap" rel="stylesheet">
     <style>
-        /* Reset and Base Styles */
+        /* Reset dan variabel */
+        :root {
+            --background: #fdfcf8;
+            --paper-white: #ffffff;
+            --paper-shadow: #e0dfda;
+            --clip-color: #b0b0b0;
+            --text-color: #333333;
+            --highlight: #f5f2e8;
+        }
+        
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
-
+        
         body {
-            background-color: #0a0a0a;
-            color: #e0e0e0;
+            font-family: 'Courier New', monospace;
+            background-color: var(--background);
+            color: var(--text-color);
             line-height: 1.6;
+            padding-top: 70px;
+            overflow-x: hidden;
         }
-
-        /* Header Styles */
-        header {
-            background: linear-gradient(to right, #1a1a1a, #2a0a0a);
-            padding: 1rem 0;
-            text-align: center;
-            border-bottom: 3px solid #b30000;
-            box-shadow: 0 4px 12px rgba(179, 0, 0, 0.3);
-            position: sticky;
+        
+        /* Video Background */
+        .video-background {
+            position: fixed;
             top: 0;
-            z-index: 100;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
         }
-
-        .header-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
+        
+        .video-background video {
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            object-fit: cover;
         }
-
-        h1 {
-            color: #ff3333;
-            font-size: 2.5rem;
-            margin-bottom: 0.5rem;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        
+        .video-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(253, 252, 248, 0.85);
         }
-
-        .subtitle {
-            color: #cccccc;
-            font-size: 1.2rem;
-            font-weight: 300;
+        
+        /* Navbar */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: var(--paper-white);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            z-index: 1000;
+            transition: all 0.3s ease;
         }
-
-        /* Navigation Styles */
-        nav {
-            background-color: #1a1a1a;
-            padding: 0.8rem 0;
-            border-bottom: 2px solid #b30000;
+        
+        .navbar.scrolled {
+            background-color: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
-
+        
         .nav-container {
             max-width: 1200px;
             margin: 0 auto;
             padding: 0 20px;
             display: flex;
-            justify-content: center;
+            justify-content: space-between;
+            align-items: center;
+            height: 60px;
         }
-
+        
+        .logo {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: var(--text-color);
+        }
+        
+        .nav-menu {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-item {
+            margin-left: 30px;
+        }
+        
         .nav-link {
-            color: #e0e0e0;
             text-decoration: none;
-            padding: 0.5rem 1.5rem;
-            margin: 0 0.5rem;
-            border-radius: 4px;
-            transition: all 0.3s ease;
+            color: var(--text-color);
             font-weight: 500;
+            transition: color 0.3s ease;
+            position: relative;
         }
-
-        .nav-link:hover, .nav-link.active {
-            background-color: #b30000;
-            color: #ffffff;
+        
+        .nav-link:hover {
+            color: #666;
         }
-
-        /* Main Content Styles */
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 2rem 20px;
-            min-height: 70vh;
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--text-color);
+            transition: width 0.3s ease;
         }
-
-        .page {
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        /* Tombol menu mobile */
+        .mobile-menu-btn {
             display: none;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 30px;
+            height: 21px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
         }
-
-        .page.active {
+        
+        .mobile-menu-btn span {
             display: block;
+            height: 3px;
+            width: 100%;
+            background-color: var(--text-color);
+            border-radius: 3px;
+            transition: all 0.3s ease;
         }
-
+        
+        .mobile-menu-btn.active span:nth-child(1) {
+            transform: translateY(9px) rotate(45deg);
+        }
+        
+        .mobile-menu-btn.active span:nth-child(2) {
+            opacity: 0;
+        }
+        
+        .mobile-menu-btn.active span:nth-child(3) {
+            transform: translateY(-9px) rotate(-45deg);
+        }
+        
+        /* Container utama */
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 20px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        /* Kertas utama */
+        .paper-stack {
+            position: relative;
+            margin: 40px 0;
+        }
+        
+        .paper-main {
+            background-color: var(--paper-white);
+            padding: 40px;
+            border-radius: 2px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.05);
+            position: relative;
+            z-index: 3;
+        }
+        
+        .paper-layer-1, .paper-layer-2 {
+            position: absolute;
+            top: 5px;
+            left: 5px;
+            right: 5px;
+            bottom: 5px;
+            background-color: var(--highlight);
+            border-radius: 2px;
+            z-index: 2;
+        }
+        
+        .paper-layer-2 {
+            top: 10px;
+            left: 10px;
+            right: 10px;
+            bottom: 10px;
+            background-color: #f9f7f1;
+            z-index: 1;
+        }
+        
+        /* Penjepit kertas */
+        .paper-clip {
+            position: absolute;
+            top: -15px;
+            left: 50px;
+            width: 30px;
+            height: 40px;
+            background-color: var(--clip-color);
+            border-radius: 5px 5px 0 0;
+            z-index: 4;
+            transform: rotate(5deg);
+            box-shadow: 0 2px 3px rgba(0,0,0,0.1);
+        }
+        
+        .paper-clip::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -5px;
+            width: 40px;
+            height: 15px;
+            background-color: var(--clip-color);
+            border-radius: 5px 5px 0 0;
+        }
+        
+        /* Profil section */
         .profile-section {
             display: flex;
-            flex-wrap: wrap;
-            gap: 2rem;
-            margin-bottom: 3rem;
-        }
-
-        .photo-container {
-            flex: 1;
-            min-width: 300px;
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
-        }
-
-        .profile-photo {
-            width: 100%;
-            max-width: 300px;
-            height: 350px;
-            background-color: #1a1a1a;
-            border: 3px solid #b30000;
-            border-radius: 8px;
-            display: flex;
-            justify-content: center;
             align-items: center;
-            color: #ff3333;
-            font-size: 1.2rem;
-            box-shadow: 0 4px 15px rgba(179, 0, 0, 0.2);
-            overflow: hidden;
+            margin-bottom: 40px;
         }
-
-        .profile-photo img {
+        
+        .profile-image {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin-right: 30px;
+            border: 5px solid var(--paper-white);
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+        
+        .profile-image img {
             width: 100%;
             height: 100%;
             object-fit: cover;
         }
-
-        .info-container {
-            flex: 2;
-            min-width: 300px;
+        
+        .profile-info h1 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.8rem;
+            margin-bottom: 10px;
+            color: #444;
         }
-
-        .info-card {
-            background-color: #1a1a1a;
-            border-radius: 8px;
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
-            border-left: 4px solid #b30000;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        
+        .profile-info p {
+            margin-bottom: 15px;
+            max-width: 600px;
         }
-
-        .info-card h2 {
-            color: #ff3333;
-            margin-bottom: 1rem;
+        
+        /* Konten tambahan */
+        .content-section {
+            margin-top: 40px;
+        }
+        
+        .content-section h2 {
+            font-family: 'Poppins', sans-serif;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--paper-shadow);
+        }
+        
+        .note-list {
+            list-style: none;
+        }
+        
+        .note-list li {
+            margin-bottom: 15px;
+            padding-left: 25px;
+            position: relative;
+        }
+        
+        .note-list li::before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            color: var(--clip-color);
             font-size: 1.5rem;
-            border-bottom: 1px solid #333;
-            padding-bottom: 0.5rem;
         }
-
-        .info-item {
-            margin-bottom: 0.8rem;
-            display: flex;
-        }
-
-        .info-label {
-            font-weight: bold;
-            color: #ff6666;
-            min-width: 120px;
-        }
-
-        .info-value {
-            color: #e0e0e0;
-        }
-
-        /* Skills Section */
-        .skills-section {
-            margin-top: 2rem;
-        }
-
-        .skills-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 1.5rem;
-            margin-top: 1rem;
-        }
-
-        .skill-card {
-            background-color: #1a1a1a;
-            border-radius: 8px;
-            padding: 1.5rem;
+        
+        /* Footer */
+        .footer {
             text-align: center;
-            border-top: 3px solid #b30000;
-            transition: transform 0.3s ease;
+            padding: 20px 0;
+            margin-top: 40px;
+            border-top: 1px solid var(--paper-shadow);
+            font-size: 0.9rem;
+            color: #666;
         }
-
-        .skill-card:hover {
-            transform: translateY(-5px);
-        }
-
-        .skill-card h3 {
-            color: #ff3333;
-            margin-bottom: 0.5rem;
-        }
-
-        /* Materi ASJ Page Styles */
-        .materi-container {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 2rem;
-        }
-
-        .materi-card {
-            background-color: #1a1a1a;
-            border-radius: 8px;
-            padding: 1.5rem;
-            border-left: 4px solid #b30000;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-        }
-
-        .materi-card h2 {
-            color: #ff3333;
-            margin-bottom: 1rem;
-            font-size: 1.8rem;
-            border-bottom: 1px solid #333;
-            padding-bottom: 0.5rem;
-        }
-
-        .materi-content {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 1.5rem;
-            margin-top: 1rem;
-        }
-
-        .materi-text {
-            flex: 2;
-            min-width: 300px;
-        }
-
-        .materi-image {
-            flex: 1;
-            min-width: 300px;
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
-        }
-
-        .materi-image img {
-            width: 100%;
-            max-width: 400px;
-            border-radius: 8px;
-            border: 2px solid #b30000;
-            box-shadow: 0 4px 15px rgba(179, 0, 0, 0.2);
-        }
-
-        .materi-list {
-            margin-left: 1.5rem;
-            margin-top: 1rem;
-        }
-
-        .materi-list li {
-            margin-bottom: 0.5rem;
-        }
-
-        /* Footer Styles */
-        footer {
-            background: linear-gradient(to right, #1a1a1a, #2a0a0a);
-            text-align: center;
-            padding: 1.5rem 0;
-            margin-top: 2rem;
-            border-top: 3px solid #b30000;
-        }
-
-        footer p {
-            color: #cccccc;
-        }
-
-        /* Responsive Design */
+        
+        /* Responsif */
         @media (max-width: 768px) {
-            .profile-section, .materi-content {
-                flex-direction: column;
-            }
-            
-            .photo-container, .info-container, .materi-text, .materi-image {
-                width: 100%;
-            }
-            
-            h1 {
-                font-size: 2rem;
-            }
-            
-            .nav-container {
+            .nav-menu {
+                position: fixed;
+                top: 60px;
+                left: -100%;
+                width: 80%;
+                height: calc(100vh - 60px);
+                background-color: var(--paper-white);
                 flex-direction: column;
                 align-items: center;
+                padding-top: 40px;
+                transition: left 0.3s ease;
+                box-shadow: 2px 0 10px rgba(0,0,0,0.1);
             }
             
-            .nav-link {
-                margin: 0.2rem 0;
-                width: 100%;
+            .nav-menu.active {
+                left: 0;
+            }
+            
+            .nav-item {
+                margin: 15px 0;
+            }
+            
+            .mobile-menu-btn {
+                display: flex;
+            }
+            
+            .profile-section {
+                flex-direction: column;
                 text-align: center;
+            }
+            
+            .profile-image {
+                margin-right: 0;
+                margin-bottom: 20px;
+            }
+            
+            .profile-info h1 {
+                font-size: 2.2rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .paper-main {
+                padding: 25px;
+            }
+            
+            .profile-info h1 {
+                font-size: 1.8rem;
             }
         }
     </style>
 </head>
 <body>
-    <header>
-        <div class="header-content">
-            <h1>ADMINISTRASI SISTEM JARINGAN XII TJK D</h1>
-            <p class="subtitle">Teknik Komputer dan Jaringan - SMK 3 Perguruan cikini</p>
-        </div>
-    </header>
+    <!-- Video Background -->
+    <div class="video-background">
+        <video autoplay muted loop>
+            <source src="Heritage.mp4" type="video/mp4">
+        </video>
+        <div class="video-overlay"></div>
+    </div>
 
-    <nav>
+    <!-- Navbar -->
+    <nav class="navbar">
         <div class="nav-container">
-            <a href="#" class="nav-link active" data-page="profile">Profil Siswa</a>
-            <a href="#" class="nav-link" data-page="materi">Materi ASJ</a>
+            <div class="logo">Notebook</div>
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav-menu" id="navMenu">
+                <li class="nav-item"><a href="home.html" class="nav-link">Home</a></li>
+                <li class="nav-item"><a href="asj.html" class="nav-link">ASJ</a></li>
+                <li class="nav-item"><a href="#" class="nav-link">PPJ</a></li>
+                <li class="nav-item"><a href="#" class="nav-link">PKPJ</a></li>
+                <li class="nav-item"><a href="#" class="nav-link">ML-WEB</a></li>
+                <li class="nav-item"><a href="#" class="nav-link">TJKN</a></li>
+                <li class="nav-item"><a href="#" class="nav-link">PK</a></li>
+            </ul>
         </div>
     </nav>
 
-    <main class="container">
-        <!-- Profile Page -->
-        <section id="profile" class="page active">
-            <div class="profile-section">
-                <div class="photo-container">
-                    <div class="profile-photo">
-                        <img src="IMG_4272.JPG" alt="Foto Profil">
+    <!-- Container utama -->
+    <div class="container">
+        <!-- Kertas utama dengan efek tumpukan -->
+        <div class="paper-stack">
+            <div class="paper-clip"></div>
+            <div class="paper-layer-2"></div>
+            <div class="paper-layer-1"></div>
+            <div class="paper-main">
+                <!-- Profil section -->
+                <section class="profile-section">
+                    <div class="profile-image">
+                        <img src="https://images.unsplash.com/photo-1494790108755-2616b612b786?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Foto Profil">
                     </div>
-                </div>
+                    <div class="profile-info">
+                        <h1>Ray Aji Dipa Dinangga</h1>
+                        <p>Saya adalah seorang siswa yang memiliki kemampuan dalam bidang Illustrasi Gambar, Teknisi Prangkat, WEB Developer, Fotografi, Video editing, konfigurasi jaringan, dan perkembanga teknologi. Sebut saja saya anak muda yang fomo akan teknologi yang akan datang karena pembahasan teknologi sangat menarik.</p>
+                        <p>Riwayat sekolah, SD Muhammadiyah 01 depok, MT's Muhammadiyah 1 depok, SMK 3 Perguruan Cikini. lahir: Jakarta, 10 mei 2007.</p>
+                    </div>
+                </section>
                 
-                <div class="info-container">
-                    <div class="info-card">
-                        <h2>Informasi Pribadi</h2>
-                        <div class="info-item">
-                            <span class="info-label">Nama Lengkap:</span>
-                            <span class="info-value"> Ray aji dipa dinangga</span>
-                        </div>
-                        <div class="info-item">
-                            <span class="info-label">NIS:</span>
-                            <span class="info-value"> 12345678</span>
-                        </div>
-                        <div class="info-item">
-                            <span class="info-label">Tempat Lahir:</span>
-                            <span class="info-value"> Jakarta</span>
-                        </div>
-                        <div class="info-item">
-                            <span class="info-label">Tanggal Lahir:</span>
-                            <span class="info-value"> 10 Mei 2007</span>
-                        </div>
-                        <div class="info-item">
-                            <span class="info-label">Jenis Kelamin:</span>
-                            <span class="info-value">Laki-laki</span>
-                        </div>
-                    </div>
-                    
-                    <div class="info-card">
-                        <h2>Kontak & Alamat</h2>
-                        <div class="info-item">
-                            <span class="info-label">Alamat:</span>
-                            <span class="info-value"> Jl. K.H Ahmad Dahlan no 9c</span>
-                        </div>
-                        <div class="info-item">
-                            <span class="info-label">Email:</span>
-                            <span class="info-value">rayaji@example.sch.id</span>
-                        </div>
-                        <div class="info-item">
-                            <span class="info-label">Telepon:</span>
-                            <span class="info-value">0851-9590-1293</span>
-                        </div>
-                    </div>
-                    
-                    <div class="info-card">
-                        <h2>Hobi & Minat</h2>
-                        <div class="info-item">
-                            <span class="info-label">Hobi:</span>
-                            <span class="info-value">Pemrograman, Jaringan Komputer, Desain Grafis, Gambar Ilustrasi</span>
-                        </div>
-                        <div class="info-item">
-                            <span class="info-label">Minat:</span>
-                            <span class="info-value">Administrasi Jaringan, Keamanan Siber, Cloud Computing</span>
-                        </div>
-                    </div>
-                </div>
+                <!-- Konten tambahan -->
+                <section class="content-section">
+                    <h2>Catatan Hari Ini</h2>
+                    <ul class="note-list">
+                        <li>did you know i always jealous of other people who have a complete family</li>
+                        <li>you're never knows this feeling if you wake up and all your family has loving you</li>
+                        <li>no need word to explain this problem that far</li>
+                        <li>i knows you're didn't understan what i feel</li>
+                    </ul>
+                </section>
             </div>
-            
-            <section class="skills-section">
-                <div class="info-card">
-                    <h2>Keahlian Teknis</h2>
-                    <div class="skills-grid">
-                        <div class="skill-card">
-                            <h3>Konfigurasi Jaringan</h3>
-                            <p>Router, Switch, VLAN, Wireless</p>
-                        </div>
-                        <div class="skill-card">
-                            <h3>Administrasi Server</h3>
-                            <p>Windows & Linux Server</p>
-                        </div>
-                        <div class="skill-card">
-                            <h3>fotografi</h3>
-                            <p>Nikon d3200, infinix hot 50 pro+</p>
-                        </div>
-                        <div class="skill-card">
-                            <h3>Pemrograman</h3>
-                            <p>HTML, CSS, JavaScript</p>
-                        </div>
-                    </div>
-                </div>
-            </section>
-        </section>
+        </div>
+    </div>
 
-        <!-- Materi ASJ Page -->
-        <section id="materi" class="page">
-            <div class="materi-container">
-                <div class="materi-card">
-                    <h2>Pengantar Hosting</h2>
-                    <div class="materi-content">
-                        <div class="materi-text">
-                            <p>Pengantar hosting adalah layanan yang menyediakan space (tempat) dan resource (sumber daya) di server internet agar website atau aplikasi Anda bisa diakses online. Ini adalah fondasi dasarnya.</p>
-                            
-                            <h3 style="color: #ff3333; margin-top: 1.5rem;">Fungsi Utama Pengantar Hosting:</h3>
-                            <ul class="materi-list">
-                                <li>Menyimpan File atau Menyimpan semua file website (HTML, CSS, gambar, video, dll).</li>
-                                <li>Menjalankan Aplikasi atau  Menyediakan lingkungan untuk menjalankan skrip PHP, database MySQL, dll.</li>
-                                <li>Menghubungkan ke Internet atau Memastikan server selalu terhubung ke internet dengan kecepatan tinggi.</li>
-                                <li>Penyedia Alamat Email atauMenyediakan layanan untuk membuat akun email dengan nama domain Anda (contoh: nama@perusahaananda.com).</li>
-                            </ul>
-                            
-                            <h3 style="color: #ff3333; margin-top: 1.5rem;">Jenis Control Panel Hosting Populer:</h3>
-                            <ul class="materi-list">
-                                <li><strong>Shared Hosting</strong> - Seperti kos-kosan. Satu server dipakai banyak website. Murah, cocok untuk pemula.</li>
-                                <li><strong>VPS(Virtual Private Server)</strong> - Seperti rumah dalam kompleks (townhouse). Anda punya bagian server yang dedicated, lebih bebas dan kuat.</li>
-                                <li><strong>Cloud Hosting</strong> - Seperti menyewa ruang di pusat perbelanjaan yang fleksibel. Sumber dayanya bisa ditambah atau dikurangi sesuai kebutuhan.</li>
-                                <li><strong>Dedicated Server</strong> - Seperti membeli satu rumah lengkap. Satu server fisik hanya untuk Anda sendiri. Sangat kuat dan mahal.</li>
-                            </ul>
-                        </div>
-                        <div class="materi-image">
-                            <div style="width: 100%; height: 300px; background-color: #2a2a2a; border: 2px solid #b30000; border-radius: 8px; display: flex; justify-content: center; align-items: center; color: #ff3333;">
-                                <img src="Screenshot 2025-10-10 140639.png" alt="panel control">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="materi-card">
-                    <h2>cPanel - Control Panel</h2>
-                    <div class="materi-content">
-                        <div class="materi-text">
-                            <p>cPanel adalah control panel hosting web yang paling banyak digunakan di dunia. Ini menyediakan antarmuka grafis dan alat otomatisasi yang dirancang untuk menyederhanakan proses hosting website.</p>
-                            
-                            <h3 style="color: #ff3333; margin-top: 1.5rem;">Fitur Utama cPanel:</h3>
-                            <ul class="materi-list">
-                                <li><strong>File Manager</strong> - Mengelola file website tanpa FTP</li>
-                                <li><strong>Email Accounts</strong> - Membuat dan mengelola akun email</li>
-                                <li><strong>MySQL Databases</strong> - Membuat dan mengelola database</li>
-                                <li><strong>Domain Management</strong> - Menambahkan domain, subdomain, dan parkir domain</li>
-                                <li><strong>Softaculous Apps Installer</strong> - Instalasi aplikasi web dengan satu klik</li>
-                                <li><strong>Security</strong> - Konfigurasi SSL, IP Blocker, dan Hotlink Protection</li>
-                                <li><strong>Backup</strong> - Membuat dan memulihkan backup</li>
-                            </ul>
-                            
-                            <h3 style="color: #ff3333; margin-top: 1.5rem;">Cara Mengakses cPanel:</h3>
-                            <p>Biasanya diakses melalui: <code>http://yourdomain.com/cpanel</code> atau <code>http://server-ip:2082</code></p>
-                        </div>
-                        <div class="materi-image">
-                            <!-- Example cPanel image -->
-                            <div style="width: 100%; height: 300px; background-color: #2a2a2a; border: 2px solid #b30000; border-radius: 8px; display: flex; justify-content: center; align-items: center; color: #ff3333;">
-                                <img src="image-19.png" alt="cpanel">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <footer>
-        <p>&copy; 2025 Administrasi Sistem Jaringan XII TJK D - SMK 3 Perguruan Cikini. All Rights Reserved.</p>
+    <!-- Footer -->
+    <footer class="footer">
+        <p>© 2025 - Website Pribadi</p>
     </footer>
 
     <script>
-        // Navigation functionality
-        document.addEventListener('DOMContentLoaded', function() {
-            const navLinks = document.querySelectorAll('.nav-link');
-            const pages = document.querySelectorAll('.page');
-            
-            navLinks.forEach(link => {
-                link.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    
-                    // Remove active class from all links and pages
-                    navLinks.forEach(l => l.classList.remove('active'));
-                    pages.forEach(p => p.classList.remove('active'));
-                    
-                    // Add active class to clicked link and corresponding page
-                    this.classList.add('active');
-                    const pageId = this.getAttribute('data-page');
-                    document.getElementById(pageId).classList.add('active');
-                });
+        // JavaScript untuk efek scroll pada navbar
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // JavaScript untuk menu mobile
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const navMenu = document.getElementById('navMenu');
+
+        mobileMenuBtn.addEventListener('click', function() {
+            mobileMenuBtn.classList.toggle('active');
+            navMenu.classList.toggle('active');
+        });
+
+        // Tutup menu mobile saat mengklik link
+        const navLinks = document.querySelectorAll('.nav-link');
+        navLinks.forEach(link => {
+            link.addEventListener('click', function() {
+                mobileMenuBtn.classList.remove('active');
+                navMenu.classList.remove('active');
             });
         });
     </script>
