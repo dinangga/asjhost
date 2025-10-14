@@ -12,4 +12,4 @@ Klick This Button to see my website 👉 [To Beranda profile](./home.html)
 📅 **© 8 October 2025**  
 🔗 **Quick Links:**  [About Me](./about) | [Projects](./project) | [Contact](./contact)
 
-**feedback:** [email] -ray659336d@gmail.com-
+**feedback:** [email] = -ray659336d@gmail.com-
