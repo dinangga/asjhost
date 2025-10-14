@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ASJ - Pengantar Hosting dan Control Panel</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Caveat:wght@700&display=swap" rel="stylesheet">
+    <style>
+        /* Reset dan variabel */
+        :root {
+            --background: #fdfcf8;
+            --paper-white: #ffffff;
+            --paper-shadow: #e0dfda;
+            --clip-color: #b0b0b0;
+            --text-color: #333333;
+            --highlight: #f5f2e8;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Courier New', monospace;
+            background-color: var(--background);
+            color: var(--text-color);
+            line-height: 1.6;
+            padding-top: 70px;
+            overflow-x: hidden;
+        }
+        
+        /* Video Background */
+        .video-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+        
+        .video-background video {
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            object-fit: cover;
+        }
+        
+        .video-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(253, 252, 248, 0.85);
+        }
+        
+        /* Navbar */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: var(--paper-white);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+        
+        .navbar.scrolled {
+            background-color: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 60px;
+        }
+        
+        .logo {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: var(--text-color);
+            text-decoration: none;
+        }
+        
+        .nav-menu {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-item {
+            margin-left: 30px;
+        }
+        
+        .nav-link {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 500;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+        
+        .nav-link:hover {
+            color: #666;
+        }
+        
+        .nav-link.active {
+            color: #444;
+            font-weight: 600;
+        }
+        
+        .nav-link.active::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: var(--text-color);
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--text-color);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        /* Tombol menu mobile */
+        .mobile-menu-btn {
+            display: none;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 30px;
+            height: 21px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .mobile-menu-btn span {
+            display: block;
+            height: 3px;
+            width: 100%;
+            background-color: var(--text-color);
+            border-radius: 3px;
+            transition: all 0.3s ease;
+        }
+        
+        .mobile-menu-btn.active span:nth-child(1) {
+            transform: translateY(9px) rotate(45deg);
+        }
+        
+        .mobile-menu-btn.active span:nth-child(2) {
+            opacity: 0;
+        }
+        
+        .mobile-menu-btn.active span:nth-child(3) {
+            transform: translateY(-9px) rotate(-45deg);
+        }
+        
+        /* Container utama */
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 20px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        /* Kertas utama */
+        .paper-stack {
+            position: relative;
+            margin: 40px 0;
+        }
+        
+        .paper-main {
+            background-color: var(--paper-white);
+            padding: 40px;
+            border-radius: 2px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.05);
+            position: relative;
+            z-index: 3;
+        }
+        
+        .paper-layer-1, .paper-layer-2 {
+            position: absolute;
+            top: 5px;
+            left: 5px;
+            right: 5px;
+            bottom: 5px;
+            background-color: var(--highlight);
+            border-radius: 2px;
+            z-index: 2;
+        }
+        
+        .paper-layer-2 {
+            top: 10px;
+            left: 10px;
+            right: 10px;
+            bottom: 10px;
+            background-color: #f9f7f1;
+            z-index: 1;
+        }
+        
+        /* Penjepit kertas */
+        .paper-clip {
+            position: absolute;
+            top: -15px;
+            left: 50px;
+            width: 30px;
+            height: 40px;
+            background-color: var(--clip-color);
+            border-radius: 5px 5px 0 0;
+            z-index: 4;
+            transform: rotate(5deg);
+            box-shadow: 0 2px 3px rgba(0,0,0,0.1);
+        }
+        
+        .paper-clip::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -5px;
+            width: 40px;
+            height: 15px;
+            background-color: var(--clip-color);
+            border-radius: 5px 5px 0 0;
+        }
+        
+        /* Header halaman */
+        .page-header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--paper-shadow);
+        }
+        
+        .page-header h1 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+            color: #444;
+        }
+        
+        .page-header p {
+            color: #666;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        /* Konten materi */
+        .content-section {
+            margin-bottom: 50px;
+        }
+        
+        .content-section h2 {
+            font-family: 'Poppins', sans-serif;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--paper-shadow);
+            color: #444;
+        }
+        
+        .materi-item {
+            display: flex;
+            margin-bottom: 40px;
+            align-items: flex-start;
+        }
+        
+        .materi-image {
+            flex: 0 0 40%;
+            margin-right: 30px;
+            border-radius: 5px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+        
+        .materi-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform 0.3s ease;
+        }
+        
+        .materi-image:hover img {
+            transform: scale(1.03);
+        }
+        
+        .materi-content {
+            flex: 1;
+        }
+        
+        .materi-content h3 {
+            font-family: 'Poppins', sans-serif;
+            margin-bottom: 15px;
+            color: #444;
+        }
+        
+        .materi-content p {
+            margin-bottom: 15px;
+        }
+        
+        .feature-list {
+            list-style: none;
+            margin: 15px 0;
+        }
+        
+        .feature-list li {
+            margin-bottom: 8px;
+            padding-left: 25px;
+            position: relative;
+        }
+        
+        .feature-list li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #5cb85c;
+            font-weight: bold;
+        }
+        
+        .step-list {
+            list-style-type: decimal;
+            margin-left: 20px;
+            margin-top: 15px;
+        }
+        
+        .step-list li {
+            margin-bottom: 10px;
+        }
+        
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 20px 0;
+            margin-top: 40px;
+            border-top: 1px solid var(--paper-shadow);
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        /* Responsif */
+        @media (max-width: 768px) {
+            .nav-menu {
+                position: fixed;
+                top: 60px;
+                left: -100%;
+                width: 80%;
+                height: calc(100vh - 60px);
+                background-color: var(--paper-white);
+                flex-direction: column;
+                align-items: center;
+                padding-top: 40px;
+                transition: left 0.3s ease;
+                box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+            }
+            
+            .nav-menu.active {
+                left: 0;
+            }
+            
+            .nav-item {
+                margin: 15px 0;
+            }
+            
+            .mobile-menu-btn {
+                display: flex;
+            }
+            
+            .materi-item {
+                flex-direction: column;
+            }
+            
+            .materi-image {
+                margin-right: 0;
+                margin-bottom: 20px;
+                width: 100%;
+            }
+            
+            .page-header h1 {
+                font-size: 1.8rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .paper-main {
+                padding: 25px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Video Background -->
+    <div class="video-background">
+        <video autoplay muted loop>
+            <source src="Heritage.mp4" type="video/mp4">
+            Browser Anda tidak mendukung video HTML5.
+        </video>
+        <div class="video-overlay"></div>
+    </div>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">Notebook</a>
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav-menu" id="navMenu">
+                <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
+                <li class="nav-item"><a href="asj.html" class="nav-link active">ASJ</a></li>
+                <li class="nav-item"><a href="ppj.html" class="nav-link">PPJ</a></li>
+                <li class="nav-item"><a href="pjpj.html" class="nav-link">PKPJ</a></li>
+                <li class="nav-item"><a href="ml-web.html" class="nav-link">ML-WEB</a></li>
+                <li class="nav-item"><a href="tjkn.html" class="nav-link">TJKN</a></li>
+                <li class="nav-item"><a href="pk.html" class="nav-link">PK</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Container utama -->
+    <div class="container">
+        <!-- Kertas utama dengan efek tumpukan -->
+        <div class="paper-stack">
+            <div class="paper-clip"></div>
+            <div class="paper-layer-2"></div>
+            <div class="paper-layer-1"></div>
+            <div class="paper-main">
+                <!-- Header halaman -->
+                <header class="page-header">
+                    <h1>Pengantar Hosting dan Control Panel</h1>
+                    <p>Materi ASJ - Memahami konsep dasar hosting website dan cara mengelola server melalui control panel</p>
+                </header>
+                
+                <!-- Konten Hosting -->
+                <section class="content-section">
+                    <h2>Apa itu Web Hosting?</h2>
+                    
+                    <div class="materi-item">
+                        <div class="materi-image">
+                            <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Web Hosting">
+                        </div>
+                        <div class="materi-content">
+                            <h3>Pengertian Hosting</h3>
+                            <p>Web hosting adalah layanan yang memungkinkan individu dan organisasi untuk membuat situs web mereka dapat diakses melalui internet. Penyedia hosting menyewakan ruang server dan konektivitas untuk menyimpan file website.</p>
+                            
+                            <p>Bayangkan hosting seperti menyewa tempat di pusat perbelanjaan untuk toko Anda. Anda membayar sewa untuk ruang tersebut, dan pengunjung dapat datang ke toko Anda melalui alamat yang sudah ditentukan.</p>
+                            
+                            <h3>Fungsi Hosting</h3>
+                            <ul class="feature-list">
+                                <li>Menyimpan file website (HTML, CSS, JavaScript, gambar, dll)</li>
+                                <li>Menjaga website tetap online 24/7</li>
+                                <li>Menyediakan alamat (domain) untuk mengakses website</li>
+                                <li>Mengelola database dan email terkait website</li>
+                                <li>Menjaga keamanan data website</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- Konten Control Panel -->
+                <section class="content-section">
+                    <h2>Control Panel Hosting</h2>
+                    
+                    <div class="materi-item">
+                        <div class="materi-image">
+                            <img src="https://images.unsplash.com/photo-1551650975-87deedd944c3?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Control Panel">
+                        </div>
+                        <div class="materi-content">
+                            <h3>Apa itu Control Panel?</h3>
+                            <p>Control panel adalah antarmuka grafis yang memudahkan pengguna untuk mengelola berbagai aspek hosting mereka tanpa perlu pengetahuan teknis yang mendalam tentang server.</p>
+                            
+                            <p>Dengan control panel, Anda dapat melakukan berbagai tugas administrasi seperti mengelola file, database, email, domain, dan pengaturan keamanan dengan mudah melalui antarmuka yang user-friendly.</p>
+                            
+                            <h3>Fungsi Control Panel</h3>
+                            <ul class="feature-list">
+                                <li>Manajemen file website (upload, edit, hapus)</li>
+                                <li>Pengelolaan database (MySQL, PostgreSQL)</li>
+                                <li>Konfigurasi akun email</li>
+                                <li>Manajemen domain dan subdomain</li>
+                                <li>Instalasi aplikasi dengan satu klik (WordPress, dll)</li>
+                                <li>Monitoring penggunaan resource</li>
+                                <li>Konfigurasi keamanan dan backup</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- Cara Akses -->
+                <section class="content-section">
+                    <h2>Cara Mengakses Control Panel</h2>
+                    
+                    <div class="materi-item">
+                        <div class="materi-image">
+                            <img src="https://images.unsplash.com/photo-1547658719-da2b51169166?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Akses Control Panel">
+                        </div>
+                        <div class="materi-content">
+                            <h3>Langkah-langkah Akses</h3>
+                            <ol class="step-list">
+                                <li>Dapatkan informasi login dari penyedia hosting (biasanya dikirim via email setelah pembelian)</li>
+                                <li>Buka browser web dan ketik alamat control panel (biasanya: http://yourdomain.com/cpanel atau alamat IP khusus)</li>
+                                <li>Masukkan username dan password yang diberikan</li>
+                                <li>Setelah login, Anda akan melihat dashboard dengan berbagai opsi manajemen</li>
+                                <li>Jelajahi berbagai fitur yang tersedia sesuai kebutuhan Anda</li>
+                            </ol>
+                            
+                            <h3>Tips Keamanan</h3>
+                            <ul class="feature-list">
+                                <li>Gunakan password yang kuat dan unik</li>
+                                <li>Aktifkan two-factor authentication jika tersedia</li>
+                                <li>Selalu logout setelah selesai menggunakan control panel</li>
+                                <li>Hindari mengakses control panel dari jaringan WiFi publik</li>
+                                <li>Perbarui software dan aplikasi secara teratur</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>© 2025 - Website Pribadi Bertema Kertas Catatan | Materi ASJ - Pengantar Hosting dan Control Panel</p>
+    </footer>
+
+    <script>
+        // JavaScript untuk efek scroll pada navbar
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // JavaScript untuk menu mobile
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const navMenu = document.getElementById('navMenu');
+
+        mobileMenuBtn.addEventListener('click', function() {
+            mobileMenuBtn.classList.toggle('active');
+            navMenu.classList.toggle('active');
+        });
+
+        // Tutup menu mobile saat mengklik link
+        const navLinks = document.querySelectorAll('.nav-link');
+        navLinks.forEach(link => {
+            link.addEventListener('click', function() {
+                mobileMenuBtn.classList.remove('active');
+                navMenu.classList.remove('active');
+            });
+        });
+    </script>
+</body>
+</html>
