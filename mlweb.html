@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ASJ - Administrasi Sistem Jaringan</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Caveat:wght@700&display=swap" rel="stylesheet">
+    <style>
+        /* Reset dan variabel */
+        :root {
+            --background: #fdfcf8;
+            --paper-white: #ffffff;
+            --paper-shadow: #e0dfda;
+            --clip-color: #b0b0b0;
+            --text-color: #333333;
+            --highlight: #f5f2e8;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Courier New', monospace;
+            background-color: var(--background);
+            color: var(--text-color);
+            line-height: 1.6;
+            padding-top: 70px;
+            overflow-x: hidden;
+        }
+        
+        /* Video Background */
+        .video-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+        
+        .video-background video {
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            object-fit: cover;
+        }
+        
+        .video-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(253, 252, 248, 0.85);
+        }
+        
+        /* Navbar */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: var(--paper-white);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+        
+        .navbar.scrolled {
+            background-color: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 60px;
+        }
+        
+        .logo {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: var(--text-color);
+            text-decoration: none;
+        }
+        
+        .nav-menu {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-item {
+            margin-left: 30px;
+        }
+        
+        .nav-link {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 500;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+        
+        .nav-link:hover {
+            color: #666;
+        }
+        
+        .nav-link.active {
+            color: #444;
+            font-weight: 600;
+        }
+        
+        .nav-link.active::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: var(--text-color);
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--text-color);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        /* Tombol menu mobile */
+        .mobile-menu-btn {
+            display: none;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 30px;
+            height: 21px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .mobile-menu-btn span {
+            display: block;
+            height: 3px;
+            width: 100%;
+            background-color: var(--text-color);
+            border-radius: 3px;
+            transition: all 0.3s ease;
+        }
+        
+        .mobile-menu-btn.active span:nth-child(1) {
+            transform: translateY(9px) rotate(45deg);
+        }
+        
+        .mobile-menu-btn.active span:nth-child(2) {
+            opacity: 0;
+        }
+        
+        .mobile-menu-btn.active span:nth-child(3) {
+            transform: translateY(-9px) rotate(-45deg);
+        }
+        
+        /* Container utama */
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 20px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        /* Kertas utama */
+        .paper-stack {
+            position: relative;
+            margin: 40px 0;
+        }
+        
+        .paper-main {
+            background-color: var(--paper-white);
+            padding: 40px;
+            border-radius: 2px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.05);
+            position: relative;
+            z-index: 3;
+        }
+        
+        .paper-layer-1, .paper-layer-2 {
+            position: absolute;
+            top: 5px;
+            left: 5px;
+            right: 5px;
+            bottom: 5px;
+            background-color: var(--highlight);
+            border-radius: 2px;
+            z-index: 2;
+        }
+        
+        .paper-layer-2 {
+            top: 10px;
+            left: 10px;
+            right: 10px;
+            bottom: 10px;
+            background-color: #f9f7f1;
+            z-index: 1;
+        }
+        
+        /* Penjepit kertas */
+        .paper-clip {
+            position: absolute;
+            top: -15px;
+            left: 50px;
+            width: 30px;
+            height: 40px;
+            background-color: var(--clip-color);
+            border-radius: 5px 5px 0 0;
+            z-index: 4;
+            transform: rotate(5deg);
+            box-shadow: 0 2px 3px rgba(0,0,0,0.1);
+        }
+        
+        .paper-clip::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -5px;
+            width: 40px;
+            height: 15px;
+            background-color: var(--clip-color);
+            border-radius: 5px 5px 0 0;
+        }
+        
+        /* Header halaman */
+        .page-header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--paper-shadow);
+        }
+        
+        .page-header h1 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+            color: #444;
+        }
+        
+        .page-header p {
+            color: #666;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        /* Konten materi */
+        .content-section {
+            margin-bottom: 50px;
+        }
+        
+        .content-section h2 {
+            font-family: 'Poppins', sans-serif;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--paper-shadow);
+            color: #444;
+        }
+        
+        .materi-item {
+            display: flex;
+            margin-bottom: 40px;
+            align-items: flex-start;
+        }
+        
+        .materi-image {
+            flex: 0 0 40%;
+            margin-right: 30px;
+            border-radius: 5px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+        
+        .materi-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform 0.3s ease;
+        }
+        
+        .materi-image:hover img {
+            transform: scale(1.03);
+        }
+        
+        .materi-content {
+            flex: 1;
+        }
+        
+        .materi-content h3 {
+            font-family: 'Poppins', sans-serif;
+            margin-bottom: 15px;
+            color: #444;
+        }
+        
+        .materi-content p {
+            margin-bottom: 15px;
+        }
+        
+        .feature-list {
+            list-style: none;
+            margin: 15px 0;
+        }
+        
+        .feature-list li {
+            margin-bottom: 8px;
+            padding-left: 25px;
+            position: relative;
+        }
+        
+        .feature-list li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #5cb85c;
+            font-weight: bold;
+        }
+        
+        .step-list {
+            list-style-type: decimal;
+            margin-left: 20px;
+            margin-top: 15px;
+        }
+        
+        .step-list li {
+            margin-bottom: 10px;
+        }
+        
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 20px 0;
+            margin-top: 40px;
+            border-top: 1px solid var(--paper-shadow);
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        /* Responsif */
+        @media (max-width: 768px) {
+            .nav-menu {
+                position: fixed;
+                top: 60px;
+                left: -100%;
+                width: 80%;
+                height: calc(100vh - 60px);
+                background-color: var(--paper-white);
+                flex-direction: column;
+                align-items: center;
+                padding-top: 40px;
+                transition: left 0.3s ease;
+                box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+            }
+            
+            .nav-menu.active {
+                left: 0;
+            }
+            
+            .nav-item {
+                margin: 15px 0;
+            }
+            
+            .mobile-menu-btn {
+                display: flex;
+            }
+            
+            .materi-item {
+                flex-direction: column;
+            }
+            
+            .materi-image {
+                margin-right: 0;
+                margin-bottom: 20px;
+                width: 100%;
+            }
+            
+            .page-header h1 {
+                font-size: 1.8rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .paper-main {
+                padding: 25px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Video Background -->
+    <div class="video-background">
+        <video autoplay muted loop>
+            <source src="Heritage.mp4" type="video/mp4">
+        </video>
+        <div class="video-overlay"></div>
+    </div>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="home.html" class="logo">Notebook</a>
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav-menu" id="navMenu">
+                <li class="nav-item"><a href="home.html" class="nav-link">Home</a></li>
+                <li class="nav-item"><a href="asj.html" class="nav-link">ASJ</a></li>
+                <li class="nav-item"><a href="ppj.html" class="nav-link">PPJ</a></li>
+                <li class="nav-item"><a href="pjpj.html" class="nav-link">PKPJ</a></li>
+                <li class="nav-item"><a href="ml-web.html" class="nav-link active">ML-WEB</a></li>
+                <li class="nav-item"><a href="tjkn.html" class="nav-link">TJKN</a></li>
+                <li class="nav-item"><a href="pk.html" class="nav-link">PK</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Container utama -->
+    <div class="container">
+        <!-- Kertas utama dengan efek tumpukan -->
+        <div class="paper-stack">
+            <div class="paper-clip"></div>
+            <div class="paper-layer-2"></div>
+            <div class="paper-layer-1"></div>
+            <div class="paper-main">
+                <!-- Header halaman -->
+                <header class="page-header">
+                    <h1>Resolusi 2025 dan harapan 2026</h1>
+                    <p>semester 2</p>
+                </header>
+                
+                <!-- Konten Hosting -->
+                <section class="content-section">
+                    <h2>resolusi 2025</h2>
+                    
+                    <div class="materi-item">
+                        <div class="materi-image">
+                            <img src="Resolusi.jpg">
+                        </div>
+                        <div class="materi-content">
+                            <h3>list resolusi</h3>
+                            <p>1. mendapat 10jt pertama</p><br>
+                            <p>2. mendapat 1000 follower di setiap sosial media</p><br>
+                            <p>3. mendapat penghargaan</p><br>
+                            <p>4. mendapat hp baru</p><br>
+                            <p>5. memiliki dabungan reksadana</p><br>
+                            <p>6. dapat ilmu teknologi yang bagus</p><br>
+                            <p>7. mendapat motor baru</p>
+                            <p>8. dapat pacar yang sefrekuensi</p>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- Konten Control Panel -->
+                <section class="content-section">
+                    <h2>harapan 2026</h2>
+                    
+                    <div class="materi-item">
+                        <div class="materi-image">
+                            <img src="harapan.jpg">
+                        </div>
+                        <div class="materi-content">
+                            <h3>list harapan</h3>
+                            <p>1. mendapat 10jt pertama</p><br>
+                            <p>2. mendapat 1000 follower di setiap sosial media</p><br>
+                            <p>3. mendapat penghargaan</p><br>
+                            <p>4. mendapat pacar yang sefrekuensi</p>
+                          
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>© 2025 - Website Pribadi | Materi ML-WEB</p>
+    </footer>
+
+    <script>
+        // JavaScript untuk efek scroll pada navbar
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // JavaScript untuk menu mobile
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const navMenu = document.getElementById('navMenu');
+
+        mobileMenuBtn.addEventListener('click', function() {
+            mobileMenuBtn.classList.toggle('active');
+            navMenu.classList.toggle('active');
+        });
+
+        // Tutup menu mobile saat mengklik link
+        const navLinks = document.querySelectorAll('.nav-link');
+        navLinks.forEach(link => {
+            link.addEventListener('click', function() {
+                mobileMenuBtn.classList.remove('active');
+                navMenu.classList.remove('active');
+            });
+        });
+    </script>
+</body>
+</html>
